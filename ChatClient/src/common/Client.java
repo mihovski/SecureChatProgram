@@ -92,7 +92,7 @@ public class Client {
   }
 
   /**
-   * Sets the session key by clone method.
+   * Sets the session key by using clone method.
    * @param sessionKey ; sessionKey
    */
   public synchronized void setSessionKey(byte[] sessionKey) {
