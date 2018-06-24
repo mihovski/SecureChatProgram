@@ -1,0 +1,678 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="14.2">
+  <zoom_level>4</zoom_level>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>484</x>
+      <y>16</y>
+      <w>168</w>
+      <h>316</h>
+    </coordinates>
+    <panel_attributes>client::ClientController
+--
++SYS_MSG: byte
++MY_MSG: byte
++PARTNER_MSG: byte
++TIME_STAMP: byte
+-clientView: client.ChatClientGUI
+-sendMsg: client.MessageSender
+-readMsg: client.MessageReceiver
+-conn: java.net.Socket
+-serverIP: java.lang.String
+-serverPort: int
+-oos: java.io.ObjectOutputStream
+-ois: java.io.ObjectInputStream
+-connected: boolean
+-activeClientsList: java.util.ArrayList
+-myName: java.lang.String
+-rsaKeyPair: crypto.RSAKeyPair
+-fullFileName: java.lang.String
+--
++ClientController(client.ChatClientGUI, java.lang.String, int): ctor
+-connectToServer(): void
+-trySocketConnection(java.lang.String, int): void
+-loginToServer(): void
+-disconnectFromServer(): void
++lostConnection(): void
+-getConnect(): void
+-sendMessage(): void
++guiEvents(): void
++writeOnTextPane(java.lang.String, byte): void
++getListModel(): javax.swing.DefaultListModel
++getPartner(): javax.swing.JTextField
++getActiveClientsList(): java.util.ArrayList
++searchClient(java.lang.String): common.Client
++searchClientInChat(): common.Client
++setPartnerInChat(common.Client): void
++getRsaKeyPair(): crypto.RSAKeyPair
++getMyName(): java.lang.String
++getSendMsg(): client.MessageSender
++getReadMsg(): client.MessageReceiver
++getOos(): java.io.ObjectOutputStream
++getOis(): java.io.ObjectInputStream
+~access$0(client.ClientController): boolean
+~access$1(client.ClientController): client.ChatClientGUI
+~access$2(client.ClientController): void
+~access$3(client.ClientController): client.MessageSender
+~access$4(client.ClientController): void
+~access$5(client.ClientController, java.lang.String): void
+~access$6(client.ClientController): java.lang.String
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>16</x>
+      <y>16</y>
+      <w>140</w>
+      <h>296</h>
+    </coordinates>
+    <panel_attributes>client::ChatClientGUI
+--
+-frame: JFrame
+-textPane: JTextPane
+-textPanel: JPanel
+-textPaneSlider: JScrollPane
+-doc: StyledDocument
+-left: SimpleAttributeSet
+-right: SimpleAttributeSet
+-sys: SimpleAttributeSet
+-timeStamp: SimpleAttributeSet
+-messageBox: JTextField
+-userName: JTextField
+-partner: JTextField
+-activeUsersList: JList&lt;String&gt;
+-listModel: DefaultListModel&lt;String&gt;
+-btnConnect: JButton
+-sendMessage: JButton
+-sendFile: JButton
+--
++initializeChatView(): void
++writeOnTextPane(String message, byte type): void
++getFrame(): JFrame
++setFrame(JFrame frame): void
++getTextPane(): JTextPane
++setTextPane(JTextPane textPane): void
++getTextPaneSlider(): JScrollPane
++setTextPaneSlider(JScrollPane textPaneSlider): void
++getTextPanel(): JPanel
++setTextPanel(JPanel textPanel): void
++getMessageBox(): JTextField
++setMessageBox(JTextField messageBox): void
++getSendMessage(): JButton
++setSendMessage(JButton sendMessage): void
++getUserName(): JTextField
++setUserName(JTextField userName): void
++getBtnConnect(): JButton
++setBtnConnect(JButton btnConnect): void
++getActiveUsersList(): JList&lt;String&gt;
++setActiveUsersList(JList&lt;String&gt; activeUsersList): void
++getListModel(): DefaultListModel&lt;String&gt;
++setListModel(DefaultListModel&lt;String&gt; listModel): void
++getPartner(): JTextField
++setPartner(JTextField partner): void
++getSendFile(): JButton
++setSendFile(JButton sendFile): void
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>816</x>
+      <y>292</y>
+      <w>164</w>
+      <h>268</h>
+    </coordinates>
+    <panel_attributes>common::Message
+--
+-serialVersionUID: long
++SystemMessage: int
++UserMessage: int
++PubKeyReq: int
++PubKeyRsp: int
++SessionKeyReq: int
++SessionKeyRsp: int
++SessionKeyOK: int
++SessionKeyBad: int
++InitMessage: int
++LogOut: int
++SecureChatReady: int
++ListOfClients: int
++NewClient: int
++DscClient: int
++SessionKeyReceived: int
++PlainTxtMsg: int
++EncryptMsg: int
++File: int
++EncryptFile: int
+-messageType: int
+-commandType: int
+-sender: java.lang.String
+-recipient: java.lang.String
+-payload: byte[]
+--
++Message(int, int, java.lang.String, java.lang.String, byte[]): ctor
++getMessageType(): int
++setMessageType(int): void
++getCommandType(): int
++setCommandType(int): void
++getSender(): java.lang.String
++setSender(java.lang.String): void
++getRecipient(): java.lang.String
++setRecipient(java.lang.String): void
++getPayload(): byte[]
++setPayload(byte[]): void
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>700</x>
+      <y>24</y>
+      <w>156</w>
+      <h>248</h>
+    </coordinates>
+    <panel_attributes>common::Client
+--
++Wait = 0: byte
++PubKeyReq = 1: byte
++PubKeyRsv = 2: byte
++SessionKeyReq = 3: byte
++SessionKeyRsv = 4: byte
++SessionKeyReqRsp = 5: byte
++SessionKeyOK = 10: byte
++SessionKeyOKConf = 11: byte
++SessionKeyBad = 12: byte
++SessionKeyBadRsv = 13: byte
++ReadyForSecureChat = 100: byte
+-clientName: String
+-publicKey: PublicKey
+-message: byte[]
+-candidateSessionKey: byte[]
+-sessionKey: byte[]
+-status: byte
+-inChat: boolean
+--
++Client(String clientName, byte status, boolean inChat): ctor
++getClientName(): String
++setClientName(String clientName): void
++getPublicKey(): PublicKey
++setPublicKey(PublicKey publicKey): void
++getMessage(): byte[]
++setMessage(byte[] message): void
++getCandidateSessionKey(): byte[]
++setCandidateSessionKey(byte[] candidateSessionKey): void
++getSessionKey(): byte[]
++setSessionKey(byte[] sessionKey): void
++getStatus(): byte
++setStatus(byte status): void
++isInChat(): boolean
++setInChat(boolean inChat): void
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>480</x>
+      <y>560</y>
+      <w>152</w>
+      <h>192</h>
+    </coordinates>
+    <panel_attributes>crypto::AES
+--
+-Nb: int
+-Nk: int
+-Nr: int
+-w: byte[][]
+ --
+-xor_func(byte[] a, byte[] b): byte[]
+-generateSubkeys(byte[] key): byte[][]
+-SubWord(byte[] in): byte[]
+-rotateWord(byte[] input): byte[]
+-AddRoundKey(byte[][] state, byte[][] w, int round): byte[][]
+-SubBytes(byte[][] state): byte[][]
+-InvSubBytes(byte[][] state): byte[][]
+-ShiftRows(byte[][] state): byte[][]
+-InvShiftRows(byte[][] state): byte[][]
+-InvMixColumns(byte[][] s): byte[][]
+-MixColumns(byte[][] s): byte[][]
++FFMul(byte a, byte b): byte
++encryptBloc(byte[] in): byte[]
++decryptBloc(byte[] in): byte[]
++encryptCBC(byte[] in, byte[] key): byte[]
++decryptCBC(byte[] in, byte[] key): byte[]
+-deletePadding(byte[] input): byte[]
++hexStringToByteArray(String s): byte[]
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>164</x>
+      <y>716</y>
+      <w>188</w>
+      <h>172</h>
+    </coordinates>
+    <panel_attributes>common::Utilities
+--
+-bigIntegerDataField: java.lang.reflect.Field
+-hexArray: char[]
+--
+~Utilities(): ctor
++Utilities(): ctor
++modPowByte(byte[], java.math.BigInteger, java.math.BigInteger): byte[]
+-getBytesWithoutSign(java.math.BigInteger): byte[]
++hideBigInteger(java.math.BigInteger): void
++convertBytesToInts(byte[]): int[]
++convertBytesToInt(byte[]): int
++messageBytesToIntsPadded(byte[], int): int[]
++paddingSize(long, int): int
++removePadding(byte[], int): byte[]
++convertIntsToBytes(int[]): byte[]
++convertIntToBytes(int): byte[]
++generateRandomBytes(int): byte[]
++getSessionKey(int): byte[]
++concByteAreas(byte[], byte[]): byte[]
++consrtuctMessage(byte[], byte[]): byte[]
++consrtuctByteMessage(byte[], byte[]): byte[]
++deconsrtuctMessage(byte[], byte): byte[]
++bytesToHex(byte[]): java.lang.String
++validate(java.lang.String): boolean
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>164</x>
+      <y>288</y>
+      <w>128</w>
+      <h>172</h>
+    </coordinates>
+    <panel_attributes>crypto::RSAKeyPair
+--
+-bitLength: int
+-pqBitLength: int
+-p: java.math.BigInteger
+-q: java.math.BigInteger
+-n: java.math.BigInteger
+-fi: java.math.BigInteger
+-e: java.math.BigInteger
+-d: java.math.BigInteger
+-publicKey: crypto.PublicKey
+-privateKey: crypto.PrivateKey
+--
++RSAKeyPair(int): ctor
++writeKeysToFiles(java.lang.String): void
+-generatePublicExponent(): java.math.BigInteger
++getP(): java.math.BigInteger
++getQ(): java.math.BigInteger
++getN(): java.math.BigInteger
++getFi(): java.math.BigInteger
++getE(): java.math.BigInteger
++getD(): java.math.BigInteger
++getBitLength(): int
++getPublicKey(): crypto.PublicKey
++getPrivateKey(): crypto.PrivateKey
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>348</x>
+      <y>352</y>
+      <w>208</w>
+      <h>116</h>
+    </coordinates>
+    <panel_attributes>client::MessageSender
+--
+-clientController: ClientController
+-oos: ObjectOutputStream
+-activeClientsList: ArrayList&lt;Client&gt;
+-clientInHandshake: boolean
+--
++MessageSender(ClientController clientController): ctor
++run(): void
++sendUserMessage(String textMessage, String partner, int commandType): void
+-sendSystemMessages(): void
+-makeChallenge(Client client, boolean encrPCSK): byte[]
+-getChallenge(Client client, boolean encrPCSK): boolean
+-xor_func(byte[] a, byte[] b): byte[]
++sendMessage(Message message): void
++isClientInHandshake(): boolean
++setClientInHandshake(boolean clientInHandshake): void
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>60</x>
+      <y>552</y>
+      <w>156</w>
+      <h>104</h>
+    </coordinates>
+    <panel_attributes>crypto::PublicKey
+--
+-n: java.math.BigInteger
+-e: java.math.BigInteger
+--
++PublicKey(java.math.BigInteger, java.math.BigInteger): ctor
++getN(): java.math.BigInteger
++getE(): java.math.BigInteger
++encryptNumber(java.math.BigInteger): java.math.BigInteger
++decryptNumber(java.math.BigInteger): java.math.BigInteger
++encrypt(byte[]): byte[]
++decrypt(byte[]): byte[]
++convertToBytes(): byte[]
++convertFromBytes(byte[]): crypto.PublicKey
++loadPublicKeyFromFile(java.lang.String): crypto.PublicKey
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>256</x>
+      <y>564</y>
+      <w>160</w>
+      <h>92</h>
+    </coordinates>
+    <panel_attributes>crypto::PrivateKey
+--
+-n: java.math.BigInteger
+-d: java.math.BigInteger
+--
++PrivateKey(java.math.BigInteger, java.math.BigInteger): ctor
++getN(): java.math.BigInteger
++getD(): java.math.BigInteger
++loadPrivateKey(java.lang.String): crypto.PrivateKey
++decryptNumber(java.math.BigInteger): java.math.BigInteger
++encryptNumber(java.math.BigInteger): java.math.BigInteger
++decrypt(byte[]): byte[]
++encrypt(byte[]): byte[]
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>224</x>
+      <y>16</y>
+      <w>192</w>
+      <h>92</h>
+    </coordinates>
+    <panel_attributes>client::SecureChat
+--
++PREF_SERVER_IP_ADDRESSES = { "localhost", "77.70.8.104" }: String[]
+-PREF_SERVER_PORT_NUMBER = 32456: int
+-serverIP = "": String
+-serverPort = PREF_SERVER_PORT_NUMBER: int
++RSA_KEY_LENGTH = 512: int
++SESSION_KEY_LENGTH = 128: int
+-clientView: ChatClientGUI
+-clientController: ClientController
+--
++main(String[] args): void
+-checkArguments(String[] arguments): void
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>600</x>
+      <y>404</y>
+      <w>184</w>
+      <h>64</h>
+    </coordinates>
+    <panel_attributes>client::MessageReceiver
+--
+-clientController: client.ClientController
+-sendMsg: client.MessageSender
+-ois: java.io.ObjectInputStream
+-activeClientsList: java.util.ArrayList
+--
++MessageReceiver(client.ClientController, client.MessageSender): ctor
++run(): void
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>348</x>
+      <y>500</y>
+      <w>116</w>
+      <h>56</h>
+    </coordinates>
+    <panel_attributes>common::MessageBytes
+--
+~message = null: byte[]
+--
++MessageBytes(byte[] messageBytes): ctor
++addMessage(byte[] newMessage): void
++extractMessage(int messageNumber): byte[]
++getMessageBytes(): byte[]
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>412</x>
+      <y>56</y>
+      <w>80</w>
+      <h>12</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;180.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>152</x>
+      <y>56</y>
+      <w>80</w>
+      <h>12</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>180.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>520</x>
+      <y>328</y>
+      <w>12</w>
+      <h>32</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;60.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>604</x>
+      <y>328</y>
+      <w>16</w>
+      <h>84</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>20.0;10.0;10.0;190.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>264</x>
+      <y>456</y>
+      <w>16</w>
+      <h>116</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;20.0;270.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>168</x>
+      <y>456</y>
+      <w>20</w>
+      <h>104</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>30.0;10.0;10.0;240.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>156</x>
+      <y>652</y>
+      <w>52</w>
+      <h>72</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;110.0;160.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>312</x>
+      <y>652</y>
+      <w>56</w>
+      <h>72</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>120.0;10.0;10.0;160.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>232</x>
+      <y>456</y>
+      <w>16</w>
+      <h>268</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>20.0;10.0;10.0;650.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>452</x>
+      <y>464</y>
+      <w>80</w>
+      <h>104</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;180.0;240.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>580</x>
+      <y>464</y>
+      <w>104</w>
+      <h>104</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>240.0;10.0;10.0;240.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>288</x>
+      <y>212</y>
+      <w>204</w>
+      <h>128</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>490.0;10.0;10.0;300.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>780</x>
+      <y>428</y>
+      <w>44</w>
+      <h>12</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;90.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>552</x>
+      <y>368</y>
+      <w>272</w>
+      <h>12</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;660.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>400</x>
+      <y>464</y>
+      <w>12</w>
+      <h>44</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;90.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>648</x>
+      <y>52</y>
+      <w>60</w>
+      <h>12</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>130.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>552</x>
+      <y>268</y>
+      <w>208</w>
+      <h>152</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;360.0;500.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>764</x>
+      <y>268</y>
+      <w>12</w>
+      <h>144</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;340.0;10.0;10.0</additional_attributes>
+  </element>
+</diagram>

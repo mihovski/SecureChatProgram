@@ -1,0 +1,304 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="14.2">
+  <zoom_level>9</zoom_level>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>9</x>
+      <y>306</y>
+      <w>369</w>
+      <h>351</h>
+    </coordinates>
+    <panel_attributes>common::Message
+--
+-serialVersionUID: long
+-messageType: int
+-commandType: int
+-sender: java.lang.String
+-recipient: java.lang.String
+-payload: byte[]
+--
++Message(int, int, java.lang.String, java.lang.String, byte[]): ctor
++getMessageType(): int
++setMessageType(int): void
++getCommandType(): int
++setCommandType(int): void
++getSender(): java.lang.String
++setSender(java.lang.String): void
++getRecipient(): java.lang.String
++setRecipient(java.lang.String): void
++getPayload(): byte[]
++setPayload(byte[]): void
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>747</x>
+      <y>18</y>
+      <w>315</w>
+      <h>279</h>
+    </coordinates>
+    <panel_attributes>server::ServerDispatcher                                 THREAD
+--
+-messagesForSend: java.util.ArrayList
+-activeClientsList: java.util.ArrayList
+-serverView: server.ChatServerGUI
+-validUser: boolean
+--
++ServerDispatcher(server.ChatServerGUI): ctor
++addClient(common.Client): void
++deleteClient(common.Client): void
++addToSendMessageQueue(common.Message): void
+-getMessageForSend(): common.Message
+-sendMessageToClient(common.Message): void
++listOfAllClients(java.lang.String): java.lang.String
++getValidUser(): boolean
+-handlingSystemMessages(common.Message): void
++searchClient(java.lang.String): common.Client
++run(): void
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>18</x>
+      <y>0</y>
+      <w>297</w>
+      <h>207</h>
+    </coordinates>
+    <panel_attributes>server::ChatServerGUI
+--
+-frame: javax.swing.JFrame
+-textPane: javax.swing.JTextPane
+-textPaneSlider: javax.swing.JScrollPane
+--
++ChatServerGUI(): ctor
++initializeChatView(): void
++writeMessageOnTextPane(java.lang.String): void
++getFrame(): javax.swing.JFrame
++setFrame(javax.swing.JFrame): void
++getTextPane(): javax.swing.JTextPane
++setTextPane(javax.swing.JTextPane): void
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>765</x>
+      <y>657</y>
+      <w>243</w>
+      <h>189</h>
+    </coordinates>
+    <panel_attributes>common::Client
+--
++clientName = "": String
++publicKey = null: byte[]
++socket = null: Socket
++oos = null: ObjectOutputStream
++ois = null: ObjectInputStream
++clientListener = null: ClientListener
++clientSender = null: ClientSender
+--
++getClientName(): String
++setClientName(String clientName): void
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>468</x>
+      <y>351</y>
+      <w>396</w>
+      <h>189</h>
+    </coordinates>
+    <panel_attributes>server::ClientSender                                                               THREAD
+--
+-messageQueue = new ArrayList&lt;Message&gt;(): ArrayList&lt;Message&gt;
+-serverDispatcher: ServerDispatcher
+-client: Client
+-out: ObjectOutputStream
+--
++ClientSender(Client client, ServerDispatcher serverDispatcher): ctor
++sendMessage(Message message): void
+-getNextMessageFromQueue(): Message
+-sendMessageToClient(Message aMessage): void
++run(): void
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>396</x>
+      <y>27</y>
+      <w>261</w>
+      <h>162</h>
+    </coordinates>
+    <panel_attributes>server::ChatServer
+--
+-LISTENING_PORT: int
+-serverSocket: java.net.ServerSocket
+-serverDispatcher: server.ServerDispatcher
+-serverView: server.ChatServerGUI
+--
++ChatServer(): ctor
++main(java.lang.String[]): void
+-handleClientConnections(): void
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>927</x>
+      <y>414</y>
+      <w>360</w>
+      <h>126</h>
+    </coordinates>
+    <panel_attributes>server::ClientListener                                                  THREAD
+--
+-serverDispatcher: server.ServerDispatcher
+-client: common.Client
+-socketReader: java.io.ObjectInputStream
+--
++ClientListener(common.Client, server.ServerDispatcher): ctor
++run(): void
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>540</x>
+      <y>234</y>
+      <w>225</w>
+      <h>135</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+m1=0..n</panel_attributes>
+    <additional_attributes>230.0;10.0;10.0;130.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1053</x>
+      <y>243</y>
+      <w>189</w>
+      <h>189</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+m1=0..n</panel_attributes>
+    <additional_attributes>10.0;10.0;190.0;190.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>891</x>
+      <y>288</y>
+      <w>27</w>
+      <h>387</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;410.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>792</x>
+      <y>531</y>
+      <w>27</w>
+      <h>144</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;140.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>819</x>
+      <y>531</y>
+      <w>27</w>
+      <h>144</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>10.0;140.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>945</x>
+      <y>531</y>
+      <w>27</w>
+      <h>144</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;140.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>972</x>
+      <y>531</y>
+      <w>27</w>
+      <h>144</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>10.0;140.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>369</x>
+      <y>423</y>
+      <w>117</w>
+      <h>27</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
+    <additional_attributes>110.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>369</x>
+      <y>531</y>
+      <w>765</w>
+      <h>90</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
+    <additional_attributes>830.0;10.0;830.0;80.0;10.0;80.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>648</x>
+      <y>81</y>
+      <w>117</w>
+      <h>27</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;110.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>306</x>
+      <y>81</y>
+      <w>108</w>
+      <h>27</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>100.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+</diagram>
