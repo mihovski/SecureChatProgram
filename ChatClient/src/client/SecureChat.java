@@ -9,7 +9,7 @@ import common.Utilities;
  */
 public class SecureChat {
 
-  public static final String[] PREF_SERVER_IP_ADDRESSES = {"localhost", "78.90.66.73"};
+  public static final String[] PREF_SERVER_IP_ADDRESSES = {"localhost"};
   private static final int PREF_SERVER_PORT_NUMBER = 32456;
 
   private static String serverIP = "";
